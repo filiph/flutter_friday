@@ -63,21 +63,47 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        FlatButton(
-          onPressed: noOp,
-          child: Text("None"),
-        ),
-        PopupMenuButton(
-          itemBuilder: (context) => ['Red', 'Greefgeren', 'Blue', 'Fuchsia']
-              .map((text) => PopupMenuItem(
-                    value: text,
-                    child: Text(text),
-                  ))
-              .toList(),
-        ),
-      ],
+    Widget buildButton(String text) => Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: FlatButton(
+            textColor: Colors.white,
+            color: Colors.blue,
+            onPressed: noOp,
+            child: Text(text),
+          ),
+        );
+
+    final myFocusNode = FocusNode();
+
+// Will auto-focus when shown.
+TextField(autofocus: true);
+
+// Can be focused programmatically.
+TextField(focusNode: myFocusNode);
+
+// Here's how:
+MaterialButton(
+  onPressed: () => FocusScope.of(context).requestFocus(myFocusNode),
+  child: Text('Focus the text field')
+);
+
+    return Center(
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          buildButton("Rock"),
+          buildButton("Pop"),
+          PopupMenuButton(
+            onSelected: (value) => print(value),
+            itemBuilder: (context) => [
+                  PopupMenuItem(value: 1, child: Text('Baby Metal')),
+                  PopupMenuItem(value: 2, child: Text('Math Rock')),
+                  PopupMenuItem(value: 3, child: Text('Nintendocore')),
+                ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -217,3 +243,16 @@ class MyMinimalScaffold extends StatelessWidget {
 //    padding: const EdgeInsets.all(16.0),
 //  );
 //}
+
+
+class AnimatedWidget extends StatefulWidget {
+  @override
+  _AnimatedWidgetState createState() => _AnimatedWidgetState();
+}
+
+class _AnimatedWidgetState extends State<AnimatedWidget> with TickerProviderStateMixin {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}

@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-void main() => runApp(new MyApp());
+void main() {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+  runApp(new MyApp());
+}
 
 final bigStyle = TextStyle(
   fontSize: 32.0,
@@ -23,14 +27,16 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      color: Colors.white,
         title: 'Flutter Demo',
         theme: new ThemeData(
           primarySwatch: Colors.deepOrange,
+          primaryColorBrightness: Brightness.light,
         ),
         home: Scaffold(
-          appBar: AppBar(
-            title: Text('Draggable'),
-          ),
+//          appBar: AppBar(
+//            title: Text('Draggable'),
+//          ),
           body: MyHomePage(),
 //          floatingActionButton: FloatingActionButton(
 //            onPressed: () {},
@@ -44,48 +50,36 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTextStyle(
-      style: TextStyle(fontSize: 24.0, inherit: true, color: Colors.black),
+      style: TextStyle(fontSize: 16.0, inherit: true, color: Colors.black),
       child: Center(
-          child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-
-
-
-
-
-
-
-
-
-
-
-
-          Draggable(
-            feedback: Material(
-              color: Colors.transparent,
-              child: Text("Oooooh!"),
-            ),
-            child: Text("Drag me"),
-            data: 42,
-          ),
-
-          Divider(height: 50.0),
-
-          DragTarget<int>(
-            builder: (context, candidateData, rejectedData) =>
-                candidateData.isEmpty
-                    ? Text("Hungry for data")
-                    : Text("Looking forward to $candidateData"),
-          ),
-
-
-
-
-
-
-        ],
-      )),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SizedBox(
+        height: 200.0,
+        child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                  child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'Placeholder',
+                    style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w900),
+                  ),
+                  SizedBox(height: 16.0,),
+                  Text(
+                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum at metus dolor. Morbi lectus lectus, tincidunt eu semper eu, tempor et dolor. '),
+                ],
+              )),
+              SizedBox(width: 16.0,),
+              Placeholder(
+                fallbackWidth: 150.0,
+              ),
+            ],
+        ),
+      ),
+          )),
     );
   }
 }

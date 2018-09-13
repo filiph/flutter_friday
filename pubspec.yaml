@@ -2,6 +2,7 @@ name: flutter_friday
 description: A new Flutter application.
 
 dependencies:
+  url_launcher: any
   flutter:
     sdk: flutter
 

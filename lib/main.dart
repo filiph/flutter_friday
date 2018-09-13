@@ -27,7 +27,7 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      color: Colors.white,
+        color: Colors.white,
         title: 'Flutter Demo',
         theme: new ThemeData(
           primarySwatch: Colors.deepOrange,
@@ -53,10 +53,10 @@ class MyHomePage extends StatelessWidget {
       style: TextStyle(fontSize: 16.0, inherit: true, color: Colors.black),
       child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SizedBox(
-        height: 200.0,
-        child: Row(
+        padding: const EdgeInsets.all(16.0),
+        child: SizedBox(
+          height: 200.0,
+          child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Expanded(
@@ -65,21 +65,26 @@ class MyHomePage extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     'Placeholder',
-                    style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w900),
+                    style:
+                        TextStyle(fontSize: 22.0, fontWeight: FontWeight.w900),
                   ),
-                  SizedBox(height: 16.0,),
+                  SizedBox(
+                    height: 16.0,
+                  ),
                   Text(
                       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum at metus dolor. Morbi lectus lectus, tincidunt eu semper eu, tempor et dolor. '),
                 ],
               )),
-              SizedBox(width: 16.0,),
+              SizedBox(
+                width: 16.0,
+              ),
               Placeholder(
                 fallbackWidth: 150.0,
               ),
             ],
+          ),
         ),
-      ),
-          )),
+      )),
     );
   }
 }

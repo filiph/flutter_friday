@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
@@ -45,33 +44,69 @@ class MyAppState extends State<MyApp> {
   }
 }
 
+abstract class Action<T> {
+  void doSomething(T object);
+}
+
+class IntAction extends Action<int> {
+  @override
+  void doSomething(int object) {
+    print("number: $object");
+  }
+}
+
+class NullAction extends Action<Null> {
+  @override
+  void doSomething(Null object) {
+    print("null");
+  }
+}
+
+class VoidAction extends Action<void> {
+  @override
+  void doSomething(void object) {
+    print("void");
+  }
+}
+
+final intAction = IntAction();
+
+final nullAction = NullAction();
+
+final voidAction = VoidAction();
+
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        MyUrlButton(
-          'Website',
-          enabled: canLaunch('https://flutter.io/'),
-          onPressed: () => launch('https://flutter.io/'),
-        ),
-        MyUrlButton(
-          'Email us',
-          enabled: canLaunch('mailto:info@example.com'),
-          onPressed: () => launch('mailto:info@example.com'),
-        ),
-        MyUrlButton(
-          'Call us',
-          enabled: canLaunch('tel:+1-650-000-1842'),
-          onPressed: () => launch('tel:+1-650-000-1842'),
-        ),
-        MyUrlButton(
-          'Text us',
-          enabled: canLaunch('sms:+1-650-000-1842'),
-          onPressed: () => launch('sms:+1-650-000-1842'),
-        ),
-      ],
-    );
+    return Column(children: [
+      intAction is Action<Null>
+          ? Text("intAction is Action<Null>")
+          : Text("intAction is not Action<Null>"),
+      nullAction is Action<Null>
+          ? Text("nullAction is Action<Null>")
+          : Text("nullAction is not Action<Null>"),
+      voidAction is Action<Null>
+          ? Text("voidAction is Action<Null>")
+          : Text("voidAction is not Action<Null>"),
+      intAction is Action<void>
+          ? Text("intAction is Action<void>")
+          : Text("intAction is not Action<void>"),
+      nullAction is Action<void>
+          ? Text("nullAction is Action<void>")
+          : Text("nullAction is not Action<void>"),
+      voidAction is Action<void>
+          ? Text("voidAction is Action<void>")
+          : Text("voidAction is not Action<void>"),
+      intAction is Action<Object>
+          ? Text("intAction is Action<Object>")
+          : Text("intAction is not Action<Object>"),
+      nullAction is Action<Object>
+          ? Text("nullAction is Action<Object>")
+          : Text("nullAction is not Action<Object>"),
+      voidAction is Action<Object>
+          ? Text("voidAction is Action<Object>")
+          : Text("voidAction is not Action<Object>"),
+    ]);
   }
 }
 

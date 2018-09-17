@@ -3,6 +3,7 @@ description: A new Flutter application.
 
 dependencies:
   url_launcher: any
+  quiver: any
   flutter:
     sdk: flutter
 

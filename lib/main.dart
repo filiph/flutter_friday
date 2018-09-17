@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
@@ -34,14 +37,10 @@ class MyAppState extends State<MyApp> {
           primaryColorBrightness: Brightness.light,
         ),
         home: Scaffold(
-//          appBar: AppBar(
-//            title: Text('Draggable'),
-//          ),
+          appBar: AppBar(
+            title: Text('Draggable'),
+          ),
           body: MyHomePage(),
-//          floatingActionButton: FloatingActionButton(
-//            onPressed: () {},
-//            child: Icon(Icons.swap_vert),
-//          ),
         ));
   }
 }
@@ -49,42 +48,56 @@ class MyAppState extends State<MyApp> {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return DefaultTextStyle(
-      style: TextStyle(fontSize: 16.0, inherit: true, color: Colors.black),
-      child: Center(
-          child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SizedBox(
-          height: 200.0,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'Placeholder',
-                    style:
-                        TextStyle(fontSize: 22.0, fontWeight: FontWeight.w900),
-                  ),
-                  SizedBox(
-                    height: 16.0,
-                  ),
-                  Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum at metus dolor. Morbi lectus lectus, tincidunt eu semper eu, tempor et dolor. '),
-                ],
-              )),
-              SizedBox(
-                width: 16.0,
-              ),
-              Placeholder(
-                fallbackWidth: 150.0,
-              ),
-            ],
-          ),
+    return ListView(
+      children: [
+        MyUrlButton(
+          'Website',
+          enabled: canLaunch('https://flutter.io/'),
+          onPressed: () => launch('https://flutter.io/'),
         ),
-      )),
+        MyUrlButton(
+          'Email us',
+          enabled: canLaunch('mailto:info@example.com'),
+          onPressed: () => launch('mailto:info@example.com'),
+        ),
+        MyUrlButton(
+          'Call us',
+          enabled: canLaunch('tel:+1-650-000-1842'),
+          onPressed: () => launch('tel:+1-650-000-1842'),
+        ),
+        MyUrlButton(
+          'Text us',
+          enabled: canLaunch('sms:+1-650-000-1842'),
+          onPressed: () => launch('sms:+1-650-000-1842'),
+        ),
+      ],
+    );
+  }
+}
+
+class MyUrlButton extends StatelessWidget {
+  final String text;
+  final void Function() onPressed;
+  final Future<bool> enabled;
+
+  MyUrlButton(
+    this.text, {
+    Key key,
+    this.onPressed,
+    this.enabled,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: enabled,
+      initialData: false,
+      builder: (context, snapshot) {
+        return MaterialButton(
+          onPressed: snapshot.data ? onPressed : null,
+          child: Text(text),
+        );
+      },
     );
   }
 }

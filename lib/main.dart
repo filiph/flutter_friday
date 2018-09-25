@@ -58,7 +58,13 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       home: Scaffold(
-        body: Center(child: Text(string)),
+        body: Center(
+          child: GestureDetector(
+            onTap: () => print("single tap"),
+            onDoubleTap: () => print("double tap"),
+            child: Text("Tap me"),
+          ),
+        ),
       ),
     );
   }
